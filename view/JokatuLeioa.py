@@ -2,15 +2,32 @@ import random
 import tkinter as tk
 from model.Tableroa import Tableroa
 from model.Piezak import *
+from playsound import playsound
+import winsound
+#from view.menu import *
 
+diff=1
 class JokatuLeioa(object):
 	"""docstring for JokatuLeioa"""
+
 	
-	def __init__(self):
+	def __init__(self, zail):
+		global diff
+		diff = zail
+		print(diff)
 		super(JokatuLeioa, self).__init__()
 		self.window = tk.Tk()
-		self.window.geometry('220x460')
-		self.window.title("Tetris jokoa")
+		if (diff==4):
+			self.window.geometry('900x500+300+100')
+			self.window.title("Tetris jokoa: Zaila")
+		elif(diff==2):
+			self.window.geometry('600x500+450+100')
+			self.window.title("Tetris jokoa: Normala")
+		else:
+			self.window.geometry('300x500+600+100')
+			self.window.title("Tetris jokoa: Erraza")
+		#self.window.geometry('500x700')
+		#self.window.title("Tetris jokoa")
 
 		
 
@@ -31,13 +48,15 @@ class JokatuLeioa(object):
 		self.window.bind("<Right>", canvas.joku_kontrola)
 		self.window.bind("<Left>", canvas.joku_kontrola)
 
+
 		self.window.mainloop()
+
 
 class TableroaPanela(tk.Frame):
 	def __init__(self, tamaina=(10,20), gelazka_tamaina=20,puntuazioalabel=None, master=None):
 		tk.Frame.__init__(self, master)
 		self.puntuazio_panela = puntuazioalabel
-		self.tamaina = tamaina
+		self.tamaina = (10*diff,20)
 		self.gelazka_tamaina = gelazka_tamaina
 
 		self.canvas = tk.Canvas(
@@ -47,10 +66,9 @@ class TableroaPanela(tk.Frame):
 		)
 		self.canvas.pack(expand=tk.YES, fill=None)
 
-		self.tab = Tableroa()
+		self.tab = Tableroa(diff)
 		self.jokatzen = None
 		self.tableroa_ezabatu()
-
 
 	def marratu_gelazka(self, x,y,color):
 		self.canvas.create_rectangle(x*self.gelazka_tamaina, y*self.gelazka_tamaina,
@@ -87,7 +105,17 @@ class TableroaPanela(tk.Frame):
 				print("GAMEOVER")
 				self.tab.hasieratu_tableroa()
 				return
-		self.after(400, self.pausu_bat)
+		#self.after(400, self.pausu_bat)
+
+		if diff == 1:
+			self.after(400, self.pausu_bat)
+			print("Erreza")
+		elif diff == 2:
+			self.after(200, self.pausu_bat)
+			print("Normala")
+		else:
+			self.after(100, self.pausu_bat)
+			print("Zaila")
 		self.marraztu_tableroa()
 
 	def puntuazioa_eguneratu(self):
@@ -112,6 +140,8 @@ class TableroaPanela(tk.Frame):
 			self.marraztu_tableroa()
 
 	def jolastu(self):
+		winsound.PlaySound(r"tetris.wav", winsound.SND_ASYNC | winsound.SND_ALIAS | winsound.SND_LOOP)
+
 		if self.jokatzen:
 			self.after_cancel(self.jokatzen)
 		self.tab.hasieratu_tableroa()

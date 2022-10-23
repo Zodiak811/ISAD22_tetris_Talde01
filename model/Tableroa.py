@@ -1,7 +1,8 @@
 from model import Piezak
-
+#from view.menu import diff
 class Tableroa:
-	def __init__(self, tamaina=(10,20)):
+	def __init__(self, diff):
+		tamaina = (10 * diff, 20)
 		self.tamaina = tamaina
 		self.hasieratu_tableroa()
 
