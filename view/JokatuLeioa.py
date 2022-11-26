@@ -7,6 +7,7 @@ from playsound import playsound
 #from view.menu import *
 
 diff=1
+pantKol='#eee'
 class JokatuLeioa(object):
 	"""docstring for JokatuLeioa"""
 
@@ -28,6 +29,7 @@ class JokatuLeioa(object):
 			self.window.title("Tetris jokoa: Erraza")
 		#self.window.geometry('500x700')
 		#self.window.title("Tetris jokoa")
+		self.window.configure(bg=pantKol)
 
 		
 
@@ -65,7 +67,6 @@ class TableroaPanela(tk.Frame):
 			bg='#eee', borderwidth=0, highlightthickness=0
 		)
 		self.canvas.pack(expand=tk.YES, fill=None)
-
 		self.tab = Tableroa(diff)
 		self.jokatzen = None
 		self.tableroa_ezabatu()

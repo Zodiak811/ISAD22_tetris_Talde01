@@ -1,11 +1,10 @@
 import tkinter as tk
 from view.menu import *
-erabiltzailea="Gonbidatu bat"
+erabiltzailea="Gonbidatua"
 
 def erabiltzaileaDago(izena):
     con = sqlite3.connect("tutorial.db")
     cur = con.cursor()
-    datuak = (izena)
     res = cur.execute("SELECT * FROM erabiltzaile WHERE izena=?", (izena,))
     if (res.fetchone() == None):
         return False

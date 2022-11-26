@@ -1,12 +1,24 @@
 import sqlite3
 import tkinter as tk
 import Logeatu
+from tkinter import ttk
+import model.Piezak
+import view.JokatuLeioa
 #from model.Tableroa import Tableroa
 #from model.Tableroa import tam, setTam
 from Logeatu import *
 
 #from view.JokatuLeioa import JokatuLeioa
 diff=1
+"""
+laukiKol='yellow'
+ZutabeKol='cyan'
+LformaKol='blue'
+LformaAldKol='orange'
+ZformaKol='green'
+ZformaAldKol='red'
+TformaKol='purple'
+"""
 
 def erabiltzaileGuztiakLortu():
     con = sqlite3.connect("tutorial.db")
@@ -134,6 +146,230 @@ def kudeatuErabiltzaileak():
         lbl2.pack()
         btn=tk.Button(window, text="Bueltatu", command=bueltatu)
         btn.pack()
+
+def pertsonalizatu():
+    def KolAldatu():
+        if(laukiSel.get()=="Horia"):
+            model.Piezak.laukiKol = 'yellow'
+        elif(laukiSel.get()=="Cian"):
+            model.Piezak.laukiKol = 'cyan'
+        elif(laukiSel.get() == "Urdina"):
+            model.Piezak.laukiKol = 'blue'
+        elif (laukiSel.get() == "Laranja"):
+            model.Piezak.laukiKol = 'orange'
+        elif (laukiSel.get() == "Berdea"):
+            model.Piezak.laukiKol = 'green'
+        elif (laukiSel.get() == "Gorria"):
+            model.Piezak.laukiKol = 'red'
+        elif (laukiSel.get() == "Morea"):
+            model.Piezak.laukiKol = 'purple'
+        elif (laukiSel.get() == "Marroia"):
+            model.Piezak.laukiKol = 'brown'
+        elif (laukiSel.get() == "Larrosa"):
+            model.Piezak.laukiKol = 'pink'
+        elif (laukiSel.get() == "Grisa"):
+            model.Piezak.laukiKol = 'gray'
+
+        if (zutabeSel.get() == "Horia"):
+            model.Piezak.zutabeKol = 'yellow'
+        elif (zutabeSel.get() == "Cian"):
+            model.Piezak.zutabeKol = 'cyan'
+        elif (zutabeSel.get() == "Urdina"):
+            model.Piezak.zutabeKol = 'blue'
+        elif (zutabeSel.get() == "Laranja"):
+            model.Piezak.zutabeKol = 'orange'
+        elif (zutabeSel.get() == "Berdea"):
+            model.Piezak.zutabeKol = 'green'
+        elif (zutabeSel.get() == "Gorria"):
+            model.Piezak.zutabeKol = 'red'
+        elif (zutabeSel.get() == "Morea"):
+            model.Piezak.zutabeKol = 'purple'
+        elif (zutabeSel.get() == "Marroia"):
+            model.Piezak.zutabeKol = 'brown'
+        elif (zutabeSel.get() == "Larrosa"):
+            model.Piezak.zutabeKol = 'pink'
+        elif (zutabeSel.get() == "Grisa"):
+            model.Piezak.zutabeKol = 'gray'
+
+        if (LformaSel.get() == "Horia"):
+            model.Piezak.LformaKol = 'yellow'
+        elif (LformaSel.get() == "Cian"):
+            model.Piezak.LformaKol = 'cyan'
+        elif (LformaSel.get() == "Urdina"):
+            model.Piezak.LformaKol = 'blue'
+        elif (LformaSel.get() == "Laranja"):
+            model.Piezak.LformaKol = 'orange'
+        elif (LformaSel.get() == "Berdea"):
+            model.Piezak.LformaKol = 'green'
+        elif (LformaSel.get() == "Gorria"):
+            model.Piezak.LformaKol = 'red'
+        elif (LformaSel.get() == "Morea"):
+            model.Piezak.LformaKol = 'purple'
+        elif (LformaSel.get() == "Marroia"):
+            model.Piezak.LformaKol = 'brown'
+        elif (LformaSel.get() == "Larrosa"):
+            model.Piezak.LformaKol = 'pink'
+        elif (LformaSel.get() == "Grisa"):
+            model.Piezak.LformaKol = 'gray'
+
+        if (LformaAldSel.get() == "Horia"):
+            model.Piezak.LformaAldKol = 'yellow'
+        elif (LformaAldSel.get() == "Cian"):
+            model.Piezak.LformaAldKol = 'cyan'
+        elif (LformaAldSel.get() == "Urdina"):
+            model.Piezak.LformaAldKol = 'blue'
+        elif (LformaAldSel.get() == "Laranja"):
+            model.Piezak.LformaAldKol = 'orange'
+        elif (LformaAldSel.get() == "Berdea"):
+            model.Piezak.LformaAldKol = 'green'
+        elif (LformaAldSel.get() == "Gorria"):
+            model.Piezak.LformaAldKol = 'red'
+        elif (LformaAldSel.get() == "Morea"):
+            model.Piezak.LformaAldKol = 'purple'
+        elif (LformaAldSel.get() == "Marroia"):
+            model.Piezak.LformaAldKol = 'brown'
+        elif (LformaAldSel.get() == "Larrosa"):
+            model.Piezak.LformaAldKol = 'pink'
+        elif (LformaAldSel.get() == "Grisa"):
+            model.Piezak.LformaAldKol = 'gray'
+
+        if (ZformaSel.get() == "Horia"):
+            model.Piezak.ZformaKol = 'yellow'
+        elif (ZformaSel.get() == "Cian"):
+            model.Piezak.ZformaKol = 'cyan'
+        elif (ZformaSel.get() == "Urdina"):
+            model.Piezak.ZformaKol = 'blue'
+        elif (ZformaSel.get() == "Laranja"):
+            model.Piezak.ZformaKol = 'orange'
+        elif (ZformaSel.get() == "Berdea"):
+            model.Piezak.ZformaKol = 'green'
+        elif (ZformaSel.get() == "Gorria"):
+            model.Piezak.ZformaKol = 'red'
+        elif (ZformaSel.get() == "Morea"):
+            model.Piezak.ZformaKol = 'purple'
+        elif (ZformaSel.get() == "Marroia"):
+            model.Piezak.ZformaKol = 'brown'
+        elif (ZformaSel.get() == "Larrosa"):
+            model.Piezak.ZformaKol = 'pink'
+        elif (ZformaSel.get() == "Grisa"):
+            model.Piezak.ZformaKol = 'gray'
+
+        if (ZformaAldSel.get() == "Horia"):
+            model.Piezak.ZformaAldKol = 'yellow'
+        elif (ZformaAldSel.get() == "Cian"):
+            model.Piezak.ZformaAldKol = 'cyan'
+        elif (ZformaAldSel.get() == "Urdina"):
+            model.Piezak.ZformaAldKol = 'blue'
+        elif (ZformaAldSel.get() == "Laranja"):
+            model.Piezak.ZformaAldKol = 'orange'
+        elif (ZformaAldSel.get() == "Berdea"):
+            model.Piezak.ZformaAldKol = 'green'
+        elif (ZformaAldSel.get() == "Gorria"):
+            model.Piezak.ZformaAldKol = 'red'
+        elif (ZformaAldSel.get() == "Morea"):
+            model.Piezak.ZformaAldKol = 'purple'
+        elif (ZformaAldSel.get() == "Marroia"):
+            model.Piezak.ZformaAldKol = 'brown'
+        elif (ZformaAldSel.get() == "Larrosa"):
+            model.Piezak.ZformaAldKol = 'pink'
+        elif (ZformaAldSel.get() == "Grisa"):
+            model.Piezak.ZformaAldKol = 'gray'
+
+        if (TformaSel.get() == "Horia"):
+            model.Piezak.TformaKol = 'yellow'
+        elif (TformaSel.get() == "Cian"):
+            model.Piezak.TformaKol = 'cyan'
+        elif (TformaSel.get() == "Urdina"):
+            model.Piezak.TformaKol = 'blue'
+        elif (TformaSel.get() == "Laranja"):
+            model.Piezak.TformaKol = 'orange'
+        elif (TformaSel.get() == "Berdea"):
+            model.Piezak.TformaKol = 'green'
+        elif (TformaSel.get() == "Gorria"):
+            model.Piezak.TformaKol = 'red'
+        elif (TformaSel.get() == "Morea"):
+            model.Piezak.TformaKol = 'purple'
+        elif (TformaSel.get() == "Marroia"):
+            model.Piezak.TformaKol = 'brown'
+        elif (TformaSel.get() == "Larrosa"):
+            model.Piezak.TformaKol = 'pink'
+        elif (TformaSel.get() == "Grisa"):
+            model.Piezak.TformaKol = 'gray'
+
+        if (pantKolSel.get() == "Horia"):
+            view.JokatuLeioa.pantKol = 'yellow'
+        elif (pantKolSel.get() == "Cian"):
+            view.JokatuLeioa.pantKol = 'cyan'
+        elif (pantKolSel.get() == "Urdina"):
+            view.JokatuLeioa.pantKol = 'blue'
+        elif (pantKolSel.get() == "Laranja"):
+            view.JokatuLeioa.pantKol = 'orange'
+        elif (pantKolSel.get() == "Berdea"):
+            view.JokatuLeioa.pantKol = 'green'
+        elif (pantKolSel.get() == "Gorria"):
+            view.JokatuLeioa.pantKol = 'red'
+        elif (pantKolSel.get() == "Morea"):
+            view.JokatuLeioa.pantKol = 'purple'
+        elif (pantKolSel.get() == "Marroia"):
+            view.JokatuLeioa.pantKol = 'brown'
+        elif (pantKolSel.get() == "Larrosa"):
+            view.JokatuLeioa.pantKol = 'pink'
+        elif (pantKolSel.get() == "Grisa"):
+            view.JokatuLeioa.pantKol = 'gray'
+
+        window.destroy()
+    global window
+    window = tk.Tk()
+    window.geometry("300x500")
+    window.title("Pertsonalizazioa")
+    toplbl = tk.Label(window, text="Nahi dituzun pertsonalizazioak aukeratu: ")
+    laukilbl=tk.Label(window, text="Laukiaren kolorea hautatu:")
+    laukiSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+
+    zutabelbl = tk.Label(window, text="Zutabearen kolorea hautatu:")
+    zutabeSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+
+    Lformalbl = tk.Label(window, text="L formaren kolorea hautatu:")
+    LformaSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+
+    LformaAldlbl = tk.Label(window, text="Alderantzizko L formaren kolorea hautatu:")
+    LformaAldSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+
+    Zformalbl = tk.Label(window, text="Z formaren kolorea hautatu:")
+    ZformaSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+
+    ZformaAldlbl = tk.Label(window, text="Alderantzizko Z formaren kolorea hautatu:")
+    ZformaAldSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+
+    Tformalbl = tk.Label(window, text="T formaren kolorea hautatu:")
+    TformaSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+
+    pantKollbl = tk.Label(window, text="Atzeko kolorea hautatu:")
+    pantKolSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+
+
+    koloreaGorde= tk.Button(window, text="Pertsonalizazioa gorde")
+    koloreaGorde.configure(command=KolAldatu)
+
+    toplbl.pack()
+    laukilbl.pack()
+    laukiSel.pack()
+    zutabelbl.pack()
+    zutabeSel.pack()
+    Lformalbl.pack()
+    LformaSel.pack()
+    LformaAldlbl.pack()
+    LformaAldSel.pack()
+    Zformalbl.pack()
+    ZformaSel.pack()
+    ZformaAldlbl.pack()
+    ZformaAldSel.pack()
+    Tformalbl.pack()
+    TformaSel.pack()
+    pantKollbl.pack()
+    pantKolSel.pack()
+    koloreaGorde.pack()
+
 def sortuMenu():
     global root
     root = tk.Tk()
@@ -153,12 +389,16 @@ def sortuMenu():
     btnKudeatu = tk.Button(root, text="Erabiltzaileak kudeatu")
     btnKudeatu.configure(command=kudeatuErabiltzaileak)
 
+    btnPertsonalizatu = tk.Button(root, text="Pertsonalizatu")
+    btnPertsonalizatu.configure(command=pertsonalizatu)
+
 
     txtErabil.pack()
     testua.pack()
     btnZ.pack()
     btnJolastu.pack()
     txtEdo.pack()
+    btnPertsonalizatu.pack()
     btnKudeatu.pack()
     root.mainloop()
     return diff
