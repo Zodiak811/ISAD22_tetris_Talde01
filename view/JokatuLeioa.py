@@ -4,6 +4,7 @@ import json
 import sqlite3
 import tkinter as tk
 from model.Tableroa import Tableroa
+from model.Tableroa import gordetakotableroa
 from model.Piezak import *
 import Logeatu
 #from playsound import playsound
@@ -43,13 +44,14 @@ class JokatuLeioa(object):
 		def partidaGorde():
 			with open("database.txt", "w") as fp:
 				json.dump(gordetakotableroa, fp)
+				self.window.destroy()
 			"""
 			con = sqlite3.connect("tutorial.db")
 			cur = con.cursor()
 			lista = " ,".join(str(x) for x in tableroa)
 			cur.execute("UPDATE erabiltzaile SET partida = ? WHERE izena = ?", (lista, Logeatu.erabiltzailea))
 			"""
-		gordeBotoia = tk.Button(self.window, text="Partida gorde")
+		gordeBotoia = tk.Button(self.window, text="Gorde eta atera")
 		gordeBotoia.configure(command=partidaGorde)
 		gordeBotoia.pack()
 

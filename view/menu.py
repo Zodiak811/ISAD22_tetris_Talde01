@@ -5,6 +5,7 @@ from tkinter import ttk
 import model.Piezak
 import view.JokatuLeioa
 from Logeatu import *
+import model.Tableroa
 
 diff=1
 
@@ -97,6 +98,12 @@ def setDiff(z):
     diff = z
 def jolastuBtn():
     global root
+    model.Tableroa.partidaBerria = True
+    root.destroy()
+
+def jarraituBtn():
+    global root
+    model.Tableroa.partidaBerria = False
     root.destroy()
 
 def zailtasuna():
@@ -406,7 +413,7 @@ def sortuMenu():
     global root
     root = tk.Tk()
     root.title("Menu")
-    root.geometry("300x200+650+300")
+    root.geometry("300x300+650+300")
     global btnZ
     btnZ = tk.Button(root, text="Erraza", font=12)
     txtErabil=tk.Label(root,text=Logeatu.erabiltzailea + " bezala jolasten ari zara, ongi etorri")
@@ -416,8 +423,11 @@ def sortuMenu():
 
     btnZ.configure(command=zailtasuna)
 
-    btnJolastu = tk.Button(root, text="Jolastu", font=16)
+    btnJolastu = tk.Button(root, text="Partida berria", font=16)
     btnJolastu.configure(command=jolastuBtn)
+
+    btnJarraitu = tk.Button(root, text="Partida jarraitu", font=16)
+    btnJarraitu.configure(command=jarraituBtn)
 
     btnKudeatu = tk.Button(root, text="Erabiltzaileak kudeatu")
     btnKudeatu.configure(command=kudeatuErabiltzaileak)
@@ -430,6 +440,7 @@ def sortuMenu():
     testua.pack()
     btnZ.pack()
     btnJolastu.pack()
+    btnJarraitu.pack()
     txtEdo.pack()
     btnPertsonalizatu.pack()
     btnKudeatu.pack()

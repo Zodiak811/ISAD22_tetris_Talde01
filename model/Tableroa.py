@@ -1,9 +1,10 @@
 from model import Piezak
 #from view.menu import diff
 import json
-
+gordetakotableroa= "a"
 with open("database.txt", "r") as fp:
     gordetakotableroa = json.load(fp)
+partidaBerria= True
 
 
 class Tableroa:
@@ -13,7 +14,11 @@ class Tableroa:
 		#self.hasieratu_tableroa()
 
 	def hasieratu_tableroa(self):
-		self.tab = gordetakotableroa
+		if partidaBerria:
+			self.tab = [[None for y in range(self.tamaina[0])] for x in range(self.tamaina[1])]
+		else:
+			self.tab = gordetakotableroa
+
 		self.pieza = None
 		self.puntuazioa = 0
 
