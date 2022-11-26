@@ -1,21 +1,57 @@
 import random
+import os
+import json
+import sqlite3
 import tkinter as tk
 from model.Tableroa import Tableroa
 from model.Piezak import *
+import Logeatu
+#from playsound import playsound
+#import winsound
+#from view.menu import *
+
+diff=1
+pantKol='#eee'
+#tableroa = 1
 
 class JokatuLeioa(object):
 	"""docstring for JokatuLeioa"""
+
 	
-	def __init__(self):
+	def __init__(self, zail):
+		global diff
+		diff = zail
+		print(diff)
 		super(JokatuLeioa, self).__init__()
 		self.window = tk.Tk()
-		self.window.geometry('220x460')
-		self.window.title("Tetris jokoa")
+		if (diff==4):
+			self.window.geometry('900x500+300+100')
+			self.window.title("Tetris jokoa: Zaila")
+		elif(diff==2):
+			self.window.geometry('600x500+450+100')
+			self.window.title("Tetris jokoa: Normala")
+		else:
+			self.window.geometry('300x500+600+100')
+			self.window.title("Tetris jokoa: Erraza")
+		self.window.configure(bg=pantKol)
 
 		
 
 		button = tk.Button(self.window, text="Partida hasi")
 		button.pack()
+
+		def partidaGorde():
+			with open("database.txt", "w") as fp:
+				json.dump(gordetakotableroa, fp)
+			"""
+			con = sqlite3.connect("tutorial.db")
+			cur = con.cursor()
+			lista = " ,".join(str(x) for x in tableroa)
+			cur.execute("UPDATE erabiltzaile SET partida = ? WHERE izena = ?", (lista, Logeatu.erabiltzailea))
+			"""
+		gordeBotoia = tk.Button(self.window, text="Partida gorde")
+		gordeBotoia.configure(command=partidaGorde)
+		gordeBotoia.pack()
 
 		puntuazioa = tk.StringVar()
 		puntuazioa.set("Puntuazioa: 0")
@@ -31,26 +67,25 @@ class JokatuLeioa(object):
 		self.window.bind("<Right>", canvas.joku_kontrola)
 		self.window.bind("<Left>", canvas.joku_kontrola)
 
+
 		self.window.mainloop()
+
 
 class TableroaPanela(tk.Frame):
 	def __init__(self, tamaina=(10,20), gelazka_tamaina=20,puntuazioalabel=None, master=None):
 		tk.Frame.__init__(self, master)
 		self.puntuazio_panela = puntuazioalabel
-		self.tamaina = tamaina
+		self.tamaina = (10*diff,20)
 		self.gelazka_tamaina = gelazka_tamaina
-
 		self.canvas = tk.Canvas(
 			width=self.tamaina[0]  * self.gelazka_tamaina+1,
 			height=self.tamaina[1] * self.gelazka_tamaina+1,
 			bg='#eee', borderwidth=0, highlightthickness=0
 		)
 		self.canvas.pack(expand=tk.YES, fill=None)
-
-		self.tab = Tableroa()
+		self.tab = Tableroa(diff)
 		self.jokatzen = None
 		self.tableroa_ezabatu()
-
 
 	def marratu_gelazka(self, x,y,color):
 		self.canvas.create_rectangle(x*self.gelazka_tamaina, y*self.gelazka_tamaina,
@@ -72,7 +107,8 @@ class TableroaPanela(tk.Frame):
 				y = self.tab.posizioa[1] + self.tab.pieza.get_y(i)
 				self.marratu_gelazka(y,x,self.tab.pieza.get_kolorea())
 		self.puntuazioa_eguneratu()
-
+		global tableroa
+		tableroa = self.tab.tab
 
 	def pausu_bat(self):
 		try:
@@ -87,7 +123,16 @@ class TableroaPanela(tk.Frame):
 				print("GAMEOVER")
 				self.tab.hasieratu_tableroa()
 				return
-		self.after(400, self.pausu_bat)
+
+		if diff == 1:
+			self.after(400, self.pausu_bat)
+			print("Erreza")
+		elif diff == 2:
+			self.after(200, self.pausu_bat)
+			print("Normala")
+		else:
+			self.after(100, self.pausu_bat)
+			print("Zaila")
 		self.marraztu_tableroa()
 
 	def puntuazioa_eguneratu(self):
@@ -101,6 +146,7 @@ class TableroaPanela(tk.Frame):
 			if event.keysym == 'Up':
 				self.tab.biratu_pieza()
 			if event.keysym == 'Down':
+				print(tableroa)
 				self.tab.pieza_kokatu_behean()
 			if event.keysym == 'Right':
 				self.tab.mugitu_eskumara()
@@ -112,6 +158,14 @@ class TableroaPanela(tk.Frame):
 			self.marraztu_tableroa()
 
 	def jolastu(self):
+		sis = os.name
+		"""
+		if(sis == "posix"):
+			winsound.PlaySound(r"tetris.wav", winsound.SND_ASYNC | winsound.SND_ALIAS | winsound.SND_LOOP)
+		elif(sis == "nt"):
+			winsound.PlaySound(r"tetris.wav", winsound.SND_ASYNC | winsound.SND_ALIAS | winsound.SND_LOOP)
+		"""
+
 		if self.jokatzen:
 			self.after_cancel(self.jokatzen)
 		self.tab.hasieratu_tableroa()

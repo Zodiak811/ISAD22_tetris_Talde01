@@ -1,12 +1,19 @@
 from model import Piezak
+#from view.menu import diff
+import json
+
+with open("database.txt", "r") as fp:
+    gordetakotableroa = json.load(fp)
+
 
 class Tableroa:
-	def __init__(self, tamaina=(10,20)):
+	def __init__(self, diff):
+		tamaina = (10 * diff, 20)
 		self.tamaina = tamaina
-		self.hasieratu_tableroa()
+		#self.hasieratu_tableroa()
 
 	def hasieratu_tableroa(self):
-		self.tab = [ [ None for y in range(self.tamaina[0])]for x in range(self.tamaina[1])]
+		self.tab = gordetakotableroa
 		self.pieza = None
 		self.puntuazioa = 0
 
@@ -38,6 +45,10 @@ class Tableroa:
 				self.posizioa = (posizio_berria[0]-1,posizio_berria[1])
 				break
 		self.puntuazioa += (i-1)*2
+		"""
+		with open("database.txt", "w") as fp:
+			json.dump(self.tab, fp)
+		"""
 
 	def sartu_pieza(self,pieza):
 		x = -pieza.min_x()

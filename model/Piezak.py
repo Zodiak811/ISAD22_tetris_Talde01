@@ -1,3 +1,11 @@
+#from view.menu import *
+laukiKol='yellow'
+zutabeKol='cyan'
+LformaKol='blue'
+LformaAldKol='orange'
+ZformaKol='green'
+ZformaAldKol='red'
+TformaKol='purple'
 class Pieza:
 	def __init__(self, forma, kolorea):
 		self.forma = forma
@@ -39,29 +47,29 @@ class Pieza:
 
 class Laukia(Pieza):
 	def __init__(self, kolorea=None):
-		super(Laukia, self).__init__([[0,0],[0,1],[1,0],[1,1]], kolorea='yellow')
+		super(Laukia, self).__init__([[0,0],[0,1],[1,0],[1,1]], kolorea=laukiKol)
 
 class Zutabea(Pieza):
 	def __init__(self, kolorea=None):
-		super(Zutabea, self).__init__([[0,-1],[0,0],[0,1],[0,2]], kolorea='cyan')
+		super(Zutabea, self).__init__([[0,-1],[0,0],[0,1],[0,2]], kolorea=zutabeKol)
 
 class Lforma(Pieza):
 	def __init__(self, kolorea=None):
-		super(Lforma, self).__init__([[-1,-1],[0,-1],[0,0],[0,1]], kolorea='blue')
+		super(Lforma, self).__init__([[-1,-1],[0,-1],[0,0],[0,1]], kolorea=LformaKol)
 
 class LformaAlderantzizko(Pieza):
 	def __init__(self, kolorea=None):
-		super(LformaAlderantzizko, self).__init__([[1,-1],[0,-1],[0,0],[0,1]], kolorea='orange')
+		super(LformaAlderantzizko, self).__init__([[1,-1],[0,-1],[0,0],[0,1]], kolorea=LformaAldKol)
 
 
 class Zforma(Pieza):
 	def __init__(self, kolorea=None):
-		super(Zforma, self).__init__([[0,-1],[0,0],[-1,0],[-1,1]], kolorea='green')
+		super(Zforma, self).__init__([[0,-1],[0,0],[-1,0],[-1,1]], kolorea=ZformaKol)
 
 class ZformaAlderantzizko(Pieza):
 	def __init__(self, kolorea=None):
-		super(ZformaAlderantzizko, self).__init__([[0,-1],[0,0],[1,0],[1,1]], kolorea='red')
+		super(ZformaAlderantzizko, self).__init__([[0,-1],[0,0],[1,0],[1,1]], kolorea=ZformaAldKol)
 
 class Tforma(Pieza):
 	def __init__(self, kolorea=None):
-		super(Tforma, self).__init__([[-1,0],[0,0],[1,0],[0,1]], kolorea='purple')
+		super(Tforma, self).__init__([[-1,0],[0,0],[1,0],[0,1]], kolorea=TformaKol)
