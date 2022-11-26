@@ -50,10 +50,6 @@ class Tableroa:
 				self.posizioa = (posizio_berria[0]-1,posizio_berria[1])
 				break
 		self.puntuazioa += (i-1)*2
-		"""
-		with open("database.txt", "w") as fp:
-			json.dump(self.tab, fp)
-		"""
 
 	def sartu_pieza(self,pieza):
 		x = -pieza.min_x()
@@ -61,6 +57,8 @@ class Tableroa:
 		self.pieza = pieza
 		if not self.probatu_mugimendua(self.posizioa):
 			raise Exception("Pieza ezin da hor sartu")
+		with open("database.txt", "w") as fp:
+			json.dump(self.tab, fp)
 
 	def mugitu_behera(self):
 		if not self.pieza:

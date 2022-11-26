@@ -40,20 +40,20 @@ class JokatuLeioa(object):
 
 		button = tk.Button(self.window, text="Partida hasi")
 		button.pack()
-
-		def partidaGorde():
-			with open("database.txt", "w") as fp:
-				json.dump(gordetakotableroa, fp)
-				self.window.destroy()
-			"""
+######################PARTIDA GORDE BOTOIA ???##################
+		"""def partidaGorde():
+			Tableroa.tableroaGorde(Tableroa)
+			self.window.destroy()
+			
 			con = sqlite3.connect("tutorial.db")
 			cur = con.cursor()
 			lista = " ,".join(str(x) for x in tableroa)
 			cur.execute("UPDATE erabiltzaile SET partida = ? WHERE izena = ?", (lista, Logeatu.erabiltzailea))
-			"""
+			
 		gordeBotoia = tk.Button(self.window, text="Gorde eta atera")
 		gordeBotoia.configure(command=partidaGorde)
 		gordeBotoia.pack()
+		"""
 
 		puntuazioa = tk.StringVar()
 		puntuazioa.set("Puntuazioa: 0")
