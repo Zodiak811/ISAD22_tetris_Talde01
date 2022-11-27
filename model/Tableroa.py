@@ -4,6 +4,12 @@ import json
 gordetakotableroa= "a"
 with open("database.txt", "r") as fp:
     gordetakotableroa = json.load(fp)
+
+puntuak = 0
+
+with open("puntuazioa.txt", "r") as fp:
+    puntuak = json.load(fp)
+
 partidaBerria= True
 
 
@@ -16,11 +22,12 @@ class Tableroa:
 	def hasieratu_tableroa(self):
 		if partidaBerria:
 			self.tab = [[None for y in range(self.tamaina[0])] for x in range(self.tamaina[1])]
+			self.puntuazioa = 0
 		else:
 			self.tab = gordetakotableroa
+			self.puntuazioa = puntuak
 
 		self.pieza = None
-		self.puntuazioa = 0
 
 	def probatu_mugimendua(self, pos_berria):
 		for i in range(4):
@@ -50,6 +57,8 @@ class Tableroa:
 				self.posizioa = (posizio_berria[0]-1,posizio_berria[1])
 				break
 		self.puntuazioa += (i-1)*2
+		global puntuak
+		puntuak = self.puntuazioa
 
 	def sartu_pieza(self,pieza):
 		x = -pieza.min_x()
@@ -59,6 +68,8 @@ class Tableroa:
 			raise Exception("Pieza ezin da hor sartu")
 		with open("database.txt", "w") as fp:
 			json.dump(self.tab, fp)
+		with open("puntuazioa.txt", "w") as fp:
+			json.dump(self.puntuazioa, fp)
 
 	def mugitu_behera(self):
 		if not self.pieza:
@@ -112,14 +123,19 @@ class Tableroa:
 			if self.lerroa_beteta_dago(i):
 				self.lerroa_ezabatu(i)
 				count +=1
+		global puntuak
 		if count == 1:
 			self.puntuazioa += 100
+			puntuak = self.puntuazioa
 		elif count == 2:
 			self.puntuazioa += 300
+			puntuak = self.puntuazioa
 		elif count == 3:
 			self.puntuazioa += 500
+			puntuak = self.puntuazioa
 		elif count == 4:
 			self.puntuazioa += 800
+			puntuak = self.puntuazioa
 
 		
 	def imprimatu(self):

@@ -393,30 +393,39 @@ def pertsonalizatu():
     toplbl = tk.Label(window, text="Nahi dituzun pertsonalizazioak aukeratu: ")
     laukilbl=tk.Label(window, text="Laukiaren kolorea hautatu:")
     laukiSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+    laukiSel.current(0)
 
     zutabelbl = tk.Label(window, text="Zutabearen kolorea hautatu:")
     zutabeSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+    zutabeSel.current(1)
 
     Lformalbl = tk.Label(window, text="L formaren kolorea hautatu:")
     LformaSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+    LformaSel.current(2)
 
     LformaAldlbl = tk.Label(window, text="Alderantzizko L formaren kolorea hautatu:")
     LformaAldSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+    LformaAldSel.current(3)
 
     Zformalbl = tk.Label(window, text="Z formaren kolorea hautatu:")
     ZformaSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+    ZformaSel.current(4)
 
     ZformaAldlbl = tk.Label(window, text="Alderantzizko Z formaren kolorea hautatu:")
     ZformaAldSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+    ZformaAldSel.current(5)
 
     Tformalbl = tk.Label(window, text="T formaren kolorea hautatu:")
     TformaSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+    TformaSel.current(6)
 
     pantKollbl = tk.Label(window, text="Atzeko kolorea hautatu:")
     pantKolSel= ttk.Combobox(window, state="readonly", values=["Horia", "Cian", "Urdina", "Laranja", "Berdea", "Gorria", "Morea", "Marroia", "Larrosa", "Grisa"])
+    pantKolSel.current(9)
 
     soinualbl = tk.Label(window, text="Soinua hautatu:")
     soinuaSel = ttk.Combobox(window, state="readonly", values=["originala", "hardcore", "rasputin"])
+    soinuaSel.current(0)
 
     koloreaGorde= tk.Button(window, text="Pertsonalizazioa gorde")
     koloreaGorde.configure(command=KolAldatu)
