@@ -2,15 +2,38 @@ import random
 import tkinter as tk
 from model.Tableroa import Tableroa
 from model.Piezak import *
+import Logeatu
+from playsound import playsound
+from threading import Thread
+#from view.menu import *
+
+diff=1
+pantKol='#eee'
+soinua = "tetris.wav"
+
+def musikaJo():
+	playsound(soinua)
+
 
 class JokatuLeioa(object):
 	"""docstring for JokatuLeioa"""
+
 	
-	def __init__(self):
+	def __init__(self, zail):
+		global diff
+		diff = zail
 		super(JokatuLeioa, self).__init__()
 		self.window = tk.Tk()
-		self.window.geometry('220x460')
-		self.window.title("Tetris jokoa")
+		if (diff==4):
+			self.window.geometry('900x500+300+100')
+			self.window.title("Tetris jokoa: Zaila")
+		elif(diff==2):
+			self.window.geometry('600x500+450+100')
+			self.window.title("Tetris jokoa: Normala")
+		else:
+			self.window.geometry('300x500+600+100')
+			self.window.title("Tetris jokoa: Erraza")
+		self.window.configure(bg=pantKol)
 
 		
 
@@ -31,26 +54,25 @@ class JokatuLeioa(object):
 		self.window.bind("<Right>", canvas.joku_kontrola)
 		self.window.bind("<Left>", canvas.joku_kontrola)
 
+
 		self.window.mainloop()
+
 
 class TableroaPanela(tk.Frame):
 	def __init__(self, tamaina=(10,20), gelazka_tamaina=20,puntuazioalabel=None, master=None):
 		tk.Frame.__init__(self, master)
 		self.puntuazio_panela = puntuazioalabel
-		self.tamaina = tamaina
+		self.tamaina = (10*diff,20)
 		self.gelazka_tamaina = gelazka_tamaina
-
 		self.canvas = tk.Canvas(
 			width=self.tamaina[0]  * self.gelazka_tamaina+1,
 			height=self.tamaina[1] * self.gelazka_tamaina+1,
 			bg='#eee', borderwidth=0, highlightthickness=0
 		)
 		self.canvas.pack(expand=tk.YES, fill=None)
-
-		self.tab = Tableroa()
+		self.tab = Tableroa(diff)
 		self.jokatzen = None
 		self.tableroa_ezabatu()
-
 
 	def marratu_gelazka(self, x,y,color):
 		self.canvas.create_rectangle(x*self.gelazka_tamaina, y*self.gelazka_tamaina,
@@ -72,7 +94,8 @@ class TableroaPanela(tk.Frame):
 				y = self.tab.posizioa[1] + self.tab.pieza.get_y(i)
 				self.marratu_gelazka(y,x,self.tab.pieza.get_kolorea())
 		self.puntuazioa_eguneratu()
-
+		global tableroa
+		tableroa = self.tab.tab
 
 	def pausu_bat(self):
 		try:
@@ -87,7 +110,13 @@ class TableroaPanela(tk.Frame):
 				print("GAMEOVER")
 				self.tab.hasieratu_tableroa()
 				return
-		self.after(400, self.pausu_bat)
+
+		if diff == 1:
+			self.after(400, self.pausu_bat)
+		elif diff == 2:
+			self.after(200, self.pausu_bat)
+		else:
+			self.after(100, self.pausu_bat)
 		self.marraztu_tableroa()
 
 	def puntuazioa_eguneratu(self):
@@ -112,6 +141,8 @@ class TableroaPanela(tk.Frame):
 			self.marraztu_tableroa()
 
 	def jolastu(self):
+		thread = Thread(target=musikaJo)
+		thread.start()
 		if self.jokatzen:
 			self.after_cancel(self.jokatzen)
 		self.tab.hasieratu_tableroa()
@@ -119,4 +150,7 @@ class TableroaPanela(tk.Frame):
 		self.tab.sartu_pieza(random.choice(pieza_posibleak)())
 		self.marraztu_tableroa()
 		self.jokatzen = self.after(400, self.pausu_bat)
+
+
+
 		
