@@ -25,7 +25,7 @@ def logInZuzena(izena, pasahitza):
 def erabiltzaileaSortu(izena, pasahitza):
     con = sqlite3.connect("tutorial.db")
     cur = con.cursor()
-    cur.execute("INSERT INTO erabiltzaile VALUES (?, ?)", (izena, pasahitza))
+    cur.execute("INSERT INTO erabiltzaile VALUES (?, ?, 0, 0, 0, 0, 0, 0)", (izena, pasahitza))
     con.commit()
 
 def erabiltzaileaEzabatu(izena):
@@ -42,6 +42,26 @@ def pasahitzaLortu(izena):
     pasStr = ' '.join(pas)
     return pasStr
 
+def puntuazioaEguneratu(punt, zail):
+    if(zail == 1):
+        zail = "Erraza"
+    elif(zail == 2):
+        zail = "Normala"
+    elif(zail == 4):
+        zail = "Zaila"
+    unekoMax = getPuntuazioMax(zail, erabiltzailea)
+    print(unekoMax)
+    if(punt > unekoMax):
+        print("entré")
+        con = sqlite3.connect("tutorial.db")
+        cur = con.cursor()
+        if(zail == "Erraza"):
+            cur.execute("UPDATE erabiltzaile SET puntuazioMaxErraza=? WHERE izena=?", (punt,erabiltzailea))
+        elif(zail == "Normala"):
+            cur.execute("UPDATE erabiltzaile SET puntuazioMaxNormala=? WHERE izena=?", (punt,erabiltzailea))
+        elif(zail == "Zaila"):
+            cur.execute("UPDATE erabiltzaile SET puntuazioMaxZaila=? WHERE izena=?", (punt,erabiltzailea))
+        con.commit()
 
 def login():
     def error(mezua):

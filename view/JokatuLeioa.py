@@ -5,11 +5,13 @@ from model.Piezak import *
 import Logeatu
 from playsound import playsound
 from threading import Thread
-#from view.menu import *
 
 diff=1
 pantKol='#eee'
 soinua = "tetris.wav"
+
+def puntuazioakEguneratu(punt):
+	Logeatu.puntuazioaEguneratu(punt, diff)
 
 def musikaJo():
 	playsound(soinua)
@@ -108,6 +110,7 @@ class TableroaPanela(tk.Frame):
 				self.tab.sartu_pieza(random.choice(pieza_posibleak)())
 			except Exception as e:
 				print("GAMEOVER")
+				puntuazioakEguneratu(self.tab.puntuazioa)
 				self.tab.hasieratu_tableroa()
 				return
 
