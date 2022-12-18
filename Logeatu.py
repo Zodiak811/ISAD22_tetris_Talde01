@@ -25,7 +25,7 @@ def logInZuzena(izena, pasahitza):
 def erabiltzaileaSortu(izena, pasahitza):
     con = sqlite3.connect("tutorial.db")
     cur = con.cursor()
-    cur.execute("INSERT INTO erabiltzaile VALUES (?, ?)", (izena, pasahitza))
+    cur.execute("INSERT INTO erabiltzaile VALUES (?, ?, 0, 0, 0, 0, 0, 0)", (izena, pasahitza))
     con.commit()
 
 def erabiltzaileaEzabatu(izena):
@@ -41,6 +41,75 @@ def pasahitzaLortu(izena):
     pas = res.fetchone()
     pasStr = ' '.join(pas)
     return pasStr
+
+def sariakLortu():
+    con = sqlite3.connect("tutorial.db")
+    cur = con.cursor()
+    res = cur.execute("SELECT sariIzena FROM lortu WHERE erabIzena=?", (erabiltzailea,))
+    return res
+
+def sariaDu(puntuak, zail):
+    sariIzena = zail + ": " + puntuak + " puntu lortu" ####### Adibidez:    Erraza: 1000 puntu lortu
+    con = sqlite3.connect("tutorial.db")
+    cur = con.cursor()
+    res = cur.execute("SELECT sariIzena FROM lortu WHERE erabIzena=? AND sariIzena=?", (erabiltzailea, sariIzena))
+    if (res.fetchone() is None):
+        return False
+    else:
+        return True
+
+def sariaDesblokeatu(puntuak, zail):
+    sariIzena = zail + ": " + puntuak + " puntu lortu" ####### Adibidez:    Erraza: 1000 puntu lortu
+    con = sqlite3.connect("tutorial.db")
+    cur = con.cursor()
+    cur.execute("INSERT INTO lortu VALUES (?,?)", (erabiltzailea, sariIzena))
+    con.commit()
+
+def puntuazioaEguneratu(punt, zail):
+    if(zail == 1):
+        zail = "Erraza"
+    elif(zail == 2):
+        zail = "Normala"
+    elif(zail == 4):
+        zail = "Zaila"
+    unekoMax = getPuntuazioMax(zail, erabiltzailea)
+    print(unekoMax)
+    if(punt > unekoMax):
+        print("entré")
+        con = sqlite3.connect("tutorial.db")
+        cur = con.cursor()
+        if(zail == "Erraza"):
+            cur.execute("UPDATE erabiltzaile SET puntuazioMaxErraza=? WHERE izena=?", (punt,erabiltzailea))
+        elif(zail == "Normala"):
+            cur.execute("UPDATE erabiltzaile SET puntuazioMaxNormala=? WHERE izena=?", (punt,erabiltzailea))
+        elif(zail == "Zaila"):
+            cur.execute("UPDATE erabiltzaile SET puntuazioMaxZaila=? WHERE izena=?", (punt,erabiltzailea))
+        con.commit()
+
+def sariakKonprobatu(punt, zail):
+    if (zail == 1):
+        zail = "Erraza"
+    elif (zail == 2):
+        zail = "Normala"
+    elif (zail == 4):
+        zail = "Zaila"
+    #############   Sariak:
+    #############   Zailtasun bakoitzeko: 1000, 3000, 5000 puntu lortu
+    if(punt >= 5000):
+        if(sariaDu("1000", zail) == False):
+            sariaDesblokeatu("1000", zail)
+        if (sariaDu("3000", zail) == False):
+            sariaDesblokeatu("3000", zail)
+        if (sariaDu("5000", zail) == False):
+            sariaDesblokeatu("5000", zail)
+    elif(punt >= 3000):
+        if (sariaDu("1000", zail) == False):
+            sariaDesblokeatu("1000", zail)
+        if (sariaDu("3000", zail) == False):
+            sariaDesblokeatu("3000", zail)
+    elif(punt >= 1000):
+        if (sariaDu("1000", zail) == False):
+            sariaDesblokeatu("1000", zail)
 
 
 def login():

@@ -1,5 +1,4 @@
 from model import Piezak
-#from view.menu import diff
 import json
 gordetakotableroa= "a"
 with open("database.txt", "r") as fp:

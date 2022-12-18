@@ -15,6 +15,28 @@ def erabiltzaileGuztiakLortu():
     res = cur.execute("SELECT * FROM erabiltzaile")
     return res
 
+def top5Lortu(zail):
+    con = sqlite3.connect("tutorial.db")
+    cur = con.cursor()
+    if(zail == "Erraza"):
+        res = cur.execute("SELECT izena, puntuazioMaxErraza AS puntuazioa FROM erabiltzaile ORDER BY puntuazioMaxErraza DESC LIMIT 5")
+    elif(zail == "Normala"):
+        res = cur.execute("SELECT izena, puntuazioMaxNormala AS puntuazioa FROM erabiltzaile ORDER BY puntuazioMaxNormala DESC LIMIT 5")
+    elif(zail == "Zaila"):
+        res = cur.execute("SELECT izena, puntuazioMaxZaila AS puntuazioa FROM erabiltzaile ORDER BY puntuazioMaxZaila DESC LIMIT 5")
+    return res
+
+def getPuntuazioMax(zail, erab):
+    con = sqlite3.connect("tutorial.db")
+    cur = con.cursor()
+    if(zail == "Erraza"):
+        res = cur.execute("SELECT MAX(puntuazioMaxErraza) FROM erabiltzaile WHERE izena=?", (erab,))
+    elif(zail == "Normala"):
+        res = cur.execute("SELECT MAX(puntuazioMaxNormala) FROM erabiltzaile WHERE izena=?", (erab,))
+    elif(zail == "Zaila"):
+        res = cur.execute("SELECT MAX(puntuazioMaxZaila) FROM erabiltzaile WHERE izena=?", (erab,))
+    return sum(res.fetchone())
+
 def laukiaKargatu(izena):
     con = sqlite3.connect("tutorial.db")
     cur = con.cursor()
@@ -452,6 +474,41 @@ def pertsonalizatu():
 
     koloreaGorde.pack()
 
+def ranking():
+    def rankingInprimatu():
+        rankingwdw = tk.Tk()
+        rankingwdw.geometry("200x250")
+        rankingwdw.title(rankingSel.get())
+        puntuazioLista = top5Lortu(rankingSel.get())
+        for row in puntuazioLista:
+            lista = tk.Label(rankingwdw, text=row)
+            lista.pack()
+    global window
+    window = tk.Tk()
+    window.geometry("300x200")
+    window.title("Ranking")
+    rankingLbl = tk.Label(window, text="Ranking mota hautatu:")
+    rankingSel = ttk.Combobox(window, state="readonly", values=["Erraza", "Normala", "Zaila"])
+    rankingSel.current(0)
+
+    ikusiBtn = tk.Button(window, text="Ikusi")
+    ikusiBtn.configure(command=rankingInprimatu)
+
+    rankingLbl.pack()
+    rankingSel.pack()
+    ikusiBtn.pack()
+
+def sariakIkusi():
+    def sariakInprimatu():
+        sariak = Logeatu.sariakLortu()
+        for row in sariak:
+            lista = tk.Label(sariWdw, text=row)
+            lista.pack()
+    sariWdw = tk.Tk()
+    sariWdw.geometry("250x600")
+    sariWdw.title("Sariak")
+    sariakInprimatu()
+
 def sortuMenu():
     global root
     root = tk.Tk()
@@ -472,12 +529,11 @@ def sortuMenu():
     btnJarraitu = tk.Button(root, text="Partida jarraitu", font=16)
     btnJarraitu.configure(command=jarraituBtn)
 
-    btnKudeatu = tk.Button(root, text="Erabiltzaileak kudeatu")
-    btnKudeatu.configure(command=kudeatuErabiltzaileak)
-
     btnPertsonalizatu = tk.Button(root, text="Pertsonalizatu")
     btnPertsonalizatu.configure(command=pertsonalizatu)
 
+    btnRanking = tk.Button(root, text="Ranking")
+    btnRanking.configure(command=ranking)
 
     txtErabil.pack()
     testua.pack()
@@ -486,7 +542,16 @@ def sortuMenu():
     btnJarraitu.pack()
     txtEdo.pack()
     btnPertsonalizatu.pack()
+    btnRanking.pack()
+
+    btnKudeatu = tk.Button(root, text="Erabiltzaileak kudeatu")
+    btnKudeatu.configure(command=kudeatuErabiltzaileak)
     btnKudeatu.pack()
+
+    btnSariak = tk.Button(root, text="Nire sariak")
+    btnSariak.configure(command=sariakIkusi)
+    btnSariak.pack()
+
     root.mainloop()
     return diff
 
